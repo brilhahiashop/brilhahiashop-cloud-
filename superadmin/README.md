@@ -1,0 +1,1 @@
+Superadmin panel placeholder. Replace with React admin panel connecting to /admin endpoints.

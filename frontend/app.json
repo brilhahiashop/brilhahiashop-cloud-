@@ -1,0 +1,23 @@
+{
+  "expo": {
+    "name": "BRILHAH IA SHOP",
+    "slug": "brilhah_ia_shop",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/logo.png",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "cover",
+      "backgroundColor": "#000014"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/logo.png",
+        "backgroundColor": "#000014"
+      }
+    },
+    "extra": {
+      "backendUrl": "https://REPLACE_WITH_BACKEND_URL"
+    }
+  }
+}

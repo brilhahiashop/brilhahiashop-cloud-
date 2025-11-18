@@ -1,0 +1,23 @@
+name: Build Android via EAS
+on:
+  push:
+    branches: [ main ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+      - name: Install dependencies
+        run: |
+          cd frontend
+          npm ci
+      - name: EAS Build
+        run: |
+          cd frontend
+          npm install -g eas-cli
+          eas build -p android --non-interactive --profile production
+    # Secrets required: EAS_TOKEN, EXPO_TOKEN

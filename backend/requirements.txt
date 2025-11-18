@@ -1,0 +1,7 @@
+fastapi
+uvicorn[standard]
+python-jose
+passlib[bcrypt]
+stripe
+python-dotenv
+requests
