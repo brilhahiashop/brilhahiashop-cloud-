@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "mkdir -p public && cp index.html cookies.html favicon.svg robots.txt sitemap.xml public/"
+  }
+}
