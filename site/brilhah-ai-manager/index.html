@@ -182,13 +182,13 @@ async function dashboard(){
 }
 
 async function products(){
- const d=await api("products").catch(()=>({products:[]})),r=d.products||[];
- return '<div class="card"><div class="sectionHead"><h2>Catálogo temporariamente retirado</h2><span class="status pending">reconstrução</span></div>'+
- '<p class="mut">Os produtos antigos foram retirados da loja pública. A APP mantém '+esc(r.length)+' registo(s) históricos apenas para controlo — não devem ser tratados como catálogo ativo, promovidos ou usados em novos conteúdos.</p>'+
- '<div class="inline"><span class="status connected">Histórico preservado</span><span class="status pending">Novos SKUs por aprovar</span></div></div>'+
- '<div class="section grid3">'+
- metric("Ativos públicos","0","até nova aprovação")+metric("Critério","Landed cost","produto + envio + taxas por mercado")+metric("Regra","Produto real","imagem, variante, stock e fornecedor confirmados")+
- '</div>';
+ const d=await api("products").catch(()=>({products:[],auto_sync:true,sync_interval_minutes:5})),r=d.products||[];
+ const synced=r.filter(p=>p.shopify_product_gid),active=synced.filter(p=>String(p.shopify_status||"").toUpperCase()==="ACTIVE"),drafts=synced.filter(p=>String(p.shopify_status||"").toUpperCase()==="DRAFT"),internal=r.filter(p=>!p.shopify_product_gid);
+ const cards=r.map(p=>{const st=String(p.shopify_status||p.status||"INTERNO").toUpperCase(),cls=st==="ACTIVE"?"connected":st==="ARCHIVED"?"failed":"pending",src=p.shopify_product_gid?"Shopify":"Sourcing interno";return '<article class="product">'+(p.image_url?'<img src="'+esc(p.image_url)+'">':'')+'<div class="p"><div class="inline" style="justify-content:space-between"><b>'+esc(p.name)+'</b><span class="status '+cls+'">'+esc(st)+'</span></div><div class="price">'+(p.sale_price!=null?money(p.sale_price):"—")+'</div><div class="mut">'+esc(src)+' · '+esc(p.supplier_name||p.vendor||"Sem fornecedor")+' · stock '+esc(p.inventory_total??"—")+'</div><small class="mut">'+(p.last_shopify_sync_at?"Sincronizado "+new Date(p.last_shopify_sync_at).toLocaleString("pt-PT"):"Candidato ainda sem sync Shopify")+'</small></div></article>'}).join("");
+ return '<div class="card"><div class="sectionHead"><h2>Produtos & sourcing</h2><span class="status connected">sync automático</span></div>'+
+ '<p class="mut">Qualquer produto criado ou importado no Shopify entra automaticamente nesta área. O sincronizador lê Shopify a cada '+esc(d.sync_interval_minutes||5)+' min. Só produtos ACTIVE ficam disponíveis no BRILHAH Studio para criação de vídeos.</p>'+
+ '<div class="grid4" style="margin-top:16px">'+metric("Shopify",synced.length,"sincronizados")+metric("Ativos",active.length,"aptos para conteúdo")+metric("Rascunhos",drafts.length,"não publicar")+metric("Sourcing",internal.length,"candidatos internos")+'</div></div>'+
+ '<div class="section">'+(r.length?'<div class="productGrid">'+cards+'</div>':empty("Sem produtos. Assim que entrarem no Shopify aparecem aqui automaticamente."))+'</div>';
 }
 
 async function pricing(){
@@ -199,11 +199,12 @@ async function pricing(){
 }
 
 async function content(){
- const d=await api("content").catch(()=>({jobs:[]})),r=d.jobs||[];
- return '<div class="studioHero card"><div><small class="brand">BRILHAH STUDIO</small><h2>Modo marca ativo</h2>'+
- '<p class="mut">Enquanto o catálogo é reconstruído, produzir apenas conteúdo institucional, Clube BRILHAH, inspiração e marca. Conteúdo de produto volta a ser desbloqueado quando existirem SKUs reais aprovados.</p>'+
- '<div class="inline"><span class="status connected">Brand Kit BRILHAH</span><span class="status connected">Sem watermark</span><span class="status pending">Produto bloqueado até aprovação</span></div></div></div>'+
- '<div class="section">'+(r.length?'<div class="card"><b>Histórico de produção</b><p class="mut">'+esc(r.length)+' trabalho(s) preservado(s). Não reutilizar produto antigo como se estivesse disponível.</p></div>':empty("Sem trabalhos guardados."))+'</div>';
+ const d=await api("content").catch(()=>({jobs:[],products:[]})),r=d.jobs||[],ps=d.products||[];cache.content=d;
+ return '<div class="studioHero card"><div><small class="brand">BRILHAH STUDIO</small><h2>Vídeo & conteúdo</h2>'+
+ '<p class="mut">As funções antigas de vídeo continuam ativas. O Studio usa apenas produtos Shopify ACTIVE, gera formato vertical 9:16, aplica o universo BRILHAH e guarda os ficheiros em privado.</p>'+
+ '<div class="inline"><span class="status connected">Motor de vídeo ativo</span><span class="status connected">Brand Kit BRILHAH</span><span class="status connected">Sem watermark de terceiros</span><span class="status '+(ps.length?"connected":"pending")+'">'+esc(ps.length)+' produto(s) disponível(eis)</span></div></div>'+
+ (ps.length?'<button id="newContent" class="btn primary">+ Criar vídeo</button>':'<button class="btn" disabled>Ative um produto real no Shopify</button>')+'</div>'+
+ '<div class="section">'+(r.length?'<div class="list">'+r.map(j=>'<div class="row"><div class="meta"><b>'+esc(j.product_title||"Conteúdo")+'</b><small>'+esc(j.platform||"")+" · "+esc(j.market||"")+" · "+esc(j.language||"")+'</small></div><div class="inline"><span class="status '+(j.status==="ready"?"connected":j.status==="failed"?"failed":"pending")+'">'+esc(j.status||"pendente")+'</span>'+(j.status==="ready"&&j.asset_url?'<button class="btn" data-video-path="'+esc(j.asset_url)+'">Abrir</button>':'')+'</div></div>').join("")+'</div>':empty("Sem vídeos guardados. O botão de criação aparece quando existir um produto real ACTIVE."))+'</div>';
 }
 
 async function marketing(){
@@ -243,7 +244,7 @@ async function fiscality(){
  '<div class="row"><div class="meta"><b>Prazo de emissão</b><small>Em regra, até ao 5.º dia útil após os bens serem colocados à disposição; em adiantamento, emitir na data do recebimento.</small></div><span class="status connected">controlo</span></div>'+
  '<div class="row"><div class="meta"><b>Comunicação à AT</b><small>Elementos das faturas: até ao dia 5 do mês seguinte à emissão.</small></div><span class="status connected">mensal</span></div>'+
  '<div class="row"><div class="meta"><b>Artigo 53.º</b><small>Monitorizar volume de negócios nacional e condições do regime; não assumir que resolve automaticamente operações transfronteiriças.</small></div><span class="status pending">monitorização</span></div>'+
- '<div class="row"><div class="meta"><b>UE / importações</b><small>Antes de cada novo SKU: confirmar origem, IOSS/OSS quando aplicável, DDP, IVA na importação e custo aduaneiro. Desde 01/07/2026 existe direito aduaneiro temporário de 3 € por item em certas vendas à distância de bens importados até 150 €.</small></div><span class="status critical">obrigatório no sourcing</span></div>'+
+ '<div class="row"><div class="meta"><b>UE / importações</b><small>Antes de cada novo SKU: confirmar origem, IOSS/OSS quando aplicável, DDP, IVA na importação e custo aduaneiro. Desde 01/07/2026 existe um direito aduaneiro temporário de 3 € por categoria de artigo/subposição pautal em pequenas encomendas importadas até 150 €, sujeito às regras da rota aduaneira.</small></div><span class="status critical">obrigatório no sourcing</span></div>'+
  '</div><div class="section card"><b>'+esc(d.billing_provider||"Portal das Finanças / ATGo")+'</b><p class="mut">A APP prepara e controla. A emissão oficial continua a ser validada pelo titular.</p></div>';
 }
 
