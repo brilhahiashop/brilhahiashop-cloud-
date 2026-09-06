@@ -1,0 +1,397 @@
+<!doctype html>
+<html lang="pt-PT">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#07101d">
+<meta name="robots" content="noindex,nofollow,noarchive">
+<title>BRILHAH AI Manager</title>
+<style>
+:root{--bg:#07101d;--bg2:#0b1423;--card:#101a2d;--card2:#131f35;--line:#243551;--txt:#f4f7fb;--mut:#92a0b6;--cyan:#5ad8cf;--vio:#7b6dff;--green:#62d98d;--amber:#e7b55e;--red:#ff7c87}
+*{box-sizing:border-box}html,body{margin:0;background:linear-gradient(180deg,#07101d,#060b13);color:var(--txt);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;min-height:100%}button,input,select,textarea{font:inherit}.hidden{display:none!important}a{color:inherit}
+.auth{min-height:100vh;display:grid;place-items:center;padding:20px}.authCard{width:min(460px,100%);background:var(--card);border:1px solid var(--line);border-radius:24px;padding:24px}.brand{font-weight:900;letter-spacing:.15em;color:var(--cyan);font-size:12px}.authCard h1{margin:12px 0}.field{margin-top:12px}.field label{display:block;color:var(--mut);font-size:12px;margin-bottom:6px}.field input,.field textarea,.field select{width:100%;background:#0a1322;color:#fff;border:1px solid var(--line);border-radius:12px;padding:13px}.btn{border:1px solid var(--line);background:var(--card2);color:#fff;border-radius:12px;padding:10px 13px;cursor:pointer}.btn.primary{background:linear-gradient(135deg,#4c7dff,#7967ff);border:0}.btn.success{background:#14321f;color:#c8f7d9;border-color:#275f42}.btn.danger{background:#35171d;color:#ffc7cd;border-color:#6b3440}.btn:disabled{opacity:.45;cursor:not-allowed}.full{width:100%}.msg{margin-top:10px;font-size:12px;color:var(--mut)}.err{color:var(--red)}.ok{color:var(--green)}
+.shell{min-height:100vh}.sidebar{position:fixed;left:0;top:0;bottom:0;width:250px;background:rgba(7,16,29,.98);border-right:1px solid var(--line);padding:16px 12px;overflow:auto;z-index:30}.sideBrand{padding:8px 10px 18px}.sideBrand small{display:block;color:var(--cyan);letter-spacing:.12em}.sideBrand strong{display:block;font-size:20px;margin-top:4px}.nav{display:grid;gap:4px}.nav button{border:0;background:transparent;color:#a8b4c8;text-align:left;padding:11px;border-radius:11px}.nav button.active{background:#13213a;color:#fff}.main{margin-left:250px;padding:16px 18px 92px;max-width:1500px}.top{display:flex;align-items:center;justify-content:space-between;gap:10px;position:sticky;top:0;z-index:10;background:rgba(7,16,29,.94);backdrop-filter:blur(10px);padding:6px 0 12px}.topLeft{display:flex;align-items:center;gap:8px}.top h1{font-size:26px;margin:0}.sub{font-size:12px;color:var(--mut);margin-top:3px}.menu,.back{width:42px;height:42px;border:1px solid var(--line);background:var(--card);color:#fff;border-radius:12px}.menu{display:none}.actions{display:flex;gap:8px}.pill{border:1px solid var(--line);background:var(--card);color:#fff;border-radius:999px;padding:9px 12px;font-size:12px}.pill.ok{color:var(--green)}
+.section{margin-top:14px}.sectionHead{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:9px}.sectionHead h2{font-size:17px;margin:0}.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px}.metric small{color:var(--mut)}.metric b{display:block;font-size:26px;margin-top:6px}.metric em{font-style:normal;color:var(--mut);font-size:11px}.list{display:grid;gap:8px}.row{display:flex;align-items:center;justify-content:space-between;gap:12px;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:13px}.meta b{display:block}.meta small{display:block;color:var(--mut);margin-top:4px;line-height:1.35}.status{font-size:11px;border:1px solid var(--line);border-radius:999px;padding:6px 9px;white-space:nowrap}.connected,.done,.ready{color:var(--green)}.pending{color:var(--amber)}.failed,.critical{color:var(--red)}.inline{display:flex;flex-wrap:wrap;gap:7px;align-items:center}.mut{color:var(--mut)}.empty{padding:24px;text-align:center;border:1px dashed var(--line);border-radius:14px;color:var(--mut)}.tableWrap{overflow:auto;border:1px solid var(--line);border-radius:14px}.table{width:100%;border-collapse:collapse;min-width:800px}.table th,.table td{padding:11px;border-bottom:1px solid var(--line);text-align:left;font-size:12px;vertical-align:top}.table th{color:#9fb0c8;background:#0a1322}.productGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.product{background:var(--card);border:1px solid var(--line);border-radius:16px;overflow:hidden}.product img{width:100%;height:200px;object-fit:cover}.product .p{padding:12px}.price{font-weight:900;color:var(--cyan);font-size:20px}.drawer{position:fixed;right:0;top:0;bottom:0;width:min(520px,94vw);background:#0a1322;border-left:1px solid var(--line);z-index:50;padding:20px;overflow:auto}.bottomNav{display:none}
+@media(max-width:980px){.sidebar{transform:translateX(-105%);transition:.2s}.sidebar.open{transform:translateX(0)}.main{margin-left:0;padding:12px 12px 94px}.menu{display:inline-block}.grid4{grid-template-columns:repeat(2,1fr)}.grid3{grid-template-columns:1fr 1fr}.productGrid{grid-template-columns:1fr 1fr}.bottomNav{display:grid;grid-template-columns:repeat(5,1fr);position:fixed;left:0;right:0;bottom:0;background:rgba(7,16,29,.98);border-top:1px solid var(--line);z-index:20;padding:6px 6px calc(6px + env(safe-area-inset-bottom))}.bottomNav button{border:0;background:transparent;color:#93a3bb;padding:7px 2px;font-size:10px;border-radius:10px}.bottomNav button.active{background:#13213a;color:#fff}.actions .desktop{display:none}.top h1{font-size:23px}}
+@media(max-width:560px){.grid3,.grid2,.productGrid{grid-template-columns:1fr}.row{align-items:flex-start}.inline{justify-content:flex-end}}
+
+.dashboardHello{margin:14px 0 12px;padding:18px;background:linear-gradient(135deg,#101a2d,#13213a);border:1px solid var(--line);border-radius:18px;display:flex;align-items:center;justify-content:space-between;gap:18px}.dashboardHello small{color:var(--cyan);font-size:10px;font-weight:900;letter-spacing:.16em}.dashboardHello h2{margin:5px 0 4px;font-size:22px}.dashboardHello p{margin:0;color:var(--mut);font-size:12px}.liveBadge{display:inline-flex;align-items:center;gap:7px;border:1px solid #275f42;background:#10281a;color:#bff4d2;border-radius:999px;padding:8px 11px;font-size:11px;white-space:nowrap}.liveBadge i{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 4px rgba(98,217,141,.12)}.quickActions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.quickAction{display:flex;align-items:center;gap:11px;text-align:left;background:var(--card);border:1px solid var(--line);color:#fff;border-radius:15px;padding:14px;cursor:pointer;min-height:72px;transition:.16s}.quickAction:hover,.quickAction:active{transform:translateY(-2px);border-color:#45638f;background:#13213a}.quickAction>b{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:#0b1423;color:var(--cyan);font-size:17px}.quickAction span{font-weight:800;font-size:12px}.quickAction small{display:block;color:var(--mut);font-weight:500;margin-top:3px}.loadingCard,.errorCard{margin-top:16px;min-height:180px;background:var(--card);border:1px solid var(--line);border-radius:18px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;text-align:center;padding:24px}.loadingCard small,.errorCard span{color:var(--mut);font-size:12px}.spinner{width:28px;height:28px;border:3px solid #243551;border-top-color:var(--cyan);border-radius:50%;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:760px){.dashboardHello{align-items:flex-start;flex-direction:column}.quickActions{grid-template-columns:1fr 1fr}}@media(max-width:440px){.quickActions{grid-template-columns:1fr}.dashboardHello{padding:15px}.grid4{gap:8px}.metric b{font-size:23px}}
+
+.studioHero{display:flex;justify-content:space-between;align-items:center;gap:16px}.studioHero h2{margin:6px 0}.brand{color:var(--cyan);font-size:11px;font-weight:900;letter-spacing:.12em}.copilotWelcome h2{margin:8px 0 4px;font-size:30px}.quickGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}.quick{background:var(--card);border:1px solid var(--line);border-radius:16px;color:#fff;padding:14px;text-align:left;min-height:100px}.quick b,.quick small{display:block}.quick b{margin-top:10px}.quick small{color:var(--mut);margin-top:4px}.copilotBox{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px}.copilotLog{display:grid;gap:8px;max-height:300px;overflow:auto}.bubble{padding:10px 12px;border-radius:13px;max-width:90%}.bubble.ai{background:#13213a}.bubble.user{background:#294c72;margin-left:auto}.copilotComposer{display:grid;grid-template-columns:1fr auto;gap:8px;margin-top:10px}.copilotComposer input{background:#0a1322;color:#fff;border:1px solid var(--line);border-radius:12px;padding:13px;min-width:0}.miniLink{border:0;background:none;color:var(--cyan);font-weight:800}@media(max-width:760px){.studioHero{flex-direction:column;align-items:stretch}.quickGrid{grid-template-columns:repeat(2,1fr)}}
+.critical{color:var(--red)}
+</style>
+</head>
+<body>
+<div id="auth" class="auth">
+  <div class="authCard">
+    <div class="brand">BRILHAH AI MANAGER</div>
+    <div id="loginBox">
+      <h1>Acesso privado</h1>
+      <p class="mut">Área administrativa protegida por autenticação e MFA.</p>
+      <div class="field"><label>Email</label><input id="email" inputmode="email" autocomplete="username"></div>
+      <div class="field"><label>Palavra-passe</label><input id="password" type="password" autocomplete="current-password"></div>
+      <button id="loginBtn" class="btn primary full" style="margin-top:14px">Entrar</button>
+      <div id="loginMsg" class="msg"></div>
+    </div>
+    <div id="mfaBox" class="hidden">
+      <h1>Confirmar MFA</h1>
+      <p class="mut">Introduz o código atual do autenticador.</p>
+      <div class="field"><label>Código</label><input id="mfaCode" maxlength="6" inputmode="numeric"></div>
+      <button id="mfaBtn" class="btn primary full" style="margin-top:14px">Confirmar</button>
+      <div id="mfaMsg" class="msg"></div>
+    </div>
+  </div>
+</div>
+
+<div id="app" class="shell hidden">
+  <aside id="sidebar" class="sidebar">
+    <div class="sideBrand"><small>BRILHAH AI</small><strong>Command Center</strong></div>
+    <nav class="nav">
+      <button data-view="dashboard">⌂ Início</button>\n      <button data-view="company">▦ Empresa 360º</button>
+      <button data-view="copilot">✦ Copiloto IA</button>
+      <button data-view="alerts">🔔 Alertas</button>
+      <button data-view="email">✉ Atendimento</button>
+      <button data-view="whatsapp">◉ WhatsApp</button>
+      <button data-view="orders">▣ Encomendas</button>
+      <button data-view="products">◇ Produtos</button>
+      <button data-view="pricing">€ Preço & Margem</button>
+      <button data-view="suppliers">⌂ Fornecedores</button>
+      <button data-view="markets">◎ Mercados</button>
+      <button data-view="returns">↩ Devoluções</button>
+      <button data-view="marketing">↗ Marketing</button>
+      <button data-view="revenues">▥ Receitas & Monetização</button>
+      <button data-view="billing">▤ Faturação</button>
+      <button data-view="fiscality">§ Fiscalidade</button>
+      <button data-view="tasks">✓ Tarefas</button>
+      <button data-view="content">▶ Conteúdo</button>
+      <button data-view="customers">♙ Clientes</button>
+      <button data-view="approvals">✓ Aprovações</button>
+      <button data-view="connections">⌁ Integrações</button>
+      <button data-view="launch">⚑ Estado</button>
+    </nav>
+  </aside>
+  <main class="main">
+    <div class="top">
+      <div class="topLeft">
+        <button id="backBtn" class="back">←</button>
+        <button id="menuBtn" class="menu">☰</button>
+        <div><h1 id="title">Visão geral</h1><div id="sub" class="sub">Operação BRILHAH.</div></div>
+      </div>
+      <div class="actions"><span class="pill ok">MFA ativo</span><button id="refreshBtn" class="pill">Atualizar</button><button id="logoutBtn" class="pill desktop">Sair</button></div>
+    </div>
+    <div id="view"></div>
+  </main>
+  <nav class="bottomNav">
+    <button data-bottom="dashboard">◈<br>Início</button>
+    <button data-bottom="orders">▣<br>Pedidos</button>
+    <button data-bottom="copilot">✦<br>IA</button>
+    <button data-bottom="billing">▤<br>Faturação</button>
+    <button data-bottom="alerts">🔔<br>Alertas</button>
+  </nav>
+</div>
+<div id="drawer" class="drawer hidden"></div>
+
+<script type="module">
+import{createClient}from"https://esm.sh/@supabase/supabase-js@2.57.4";
+const U="https://lnezqvonjcvhgaogndqh.supabase.co",K="sb_publishable_bm64tpscRoPyieo2qQqpCQ_BNSX-TcC",A=U+"/functions/v1/brilhah-api";
+const s=createClient(U,K,{auth:{persistSession:true,autoRefreshToken:true}});
+const $=id=>document.getElementById(id),esc=v=>String(v??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+const money=v=>v===null||v===undefined||v===""?"—":Number(v).toLocaleString("pt-PT",{style:"currency",currency:"EUR"});
+let current="dashboard",hist=["dashboard"],cache={},mfaFactor=null;
+const titles={dashboard:["Início","Operação BRILHAH em tempo real."],company:["Empresa 360º","Estado global da empresa, riscos e próximos controlos."],copilot:["Copiloto IA","Comandos inteligentes sobre os dados reais da BRILHAH."],alerts:["Alertas","Só o que exige atenção ou decisão."],email:["Atendimento","Apenas mensagens novas."],whatsapp:["WhatsApp","Automação e escalamento humano."],orders:["Encomendas","Pedidos e fulfillment."],products:["Catálogo","Em reconstrução · apenas produtos reais aprovados."],pricing:["Preço & Margem","Custos e recomendação por mercado."],suppliers:["Fornecedores","Condições operacionais."],markets:["Mercados","Cobertura ativa."],returns:["Devoluções","Ocorrências e pós-venda."],marketing:["Marketing","Tráfego e conversão."],revenues:["Receitas & Monetização","Receita real separada de canais preparados."],billing:["Faturação","Só ações pendentes."],fiscality:["Fiscalidade","Estado fiscal operacional."],tasks:["Tarefas","Pendentes e concluídas."],content:["Conteúdo","Fila de produção."],customers:["Clientes","Base de clientes."],approvals:["Aprovações","Decisões humanas."],connections:["Integrações","Estado técnico real."],launch:["Estado","Pendências reais, sem ruído."]};
+async function token(){const{data}=await s.auth.getSession();return data.session?.access_token||""}
+async function api(resource,opt={}){const t=await token();const r=await fetch(A+"?resource="+encodeURIComponent(resource),{...opt,headers:{"content-type":"application/json","authorization":"Bearer "+t,...(opt.headers||{})}});const j=await r.json().catch(()=>({}));if(!r.ok)throw Error(j.message||j.error||"Erro");return j}
+function metric(a,b,c){return'<div class="card metric"><small>'+esc(a)+'</small><b>'+esc(b)+'</b><em>'+esc(c||"")+'</em></div>'}
+function empty(t){return'<div class="empty">'+esc(t)+'</div>'}
+async function routeAuth(){const{data:{session}}=await s.auth.getSession();if(!session){$("auth").classList.remove("hidden");$("app").classList.add("hidden");return}const aal=await s.auth.mfa.getAuthenticatorAssuranceLevel();if(aal.data?.currentLevel!=="aal2"){const f=await s.auth.mfa.listFactors();mfaFactor=(f.data?.totp||[]).find(x=>x.status==="verified")||null;if(mfaFactor){$("loginBox").classList.add("hidden");$("mfaBox").classList.remove("hidden");$("auth").classList.remove("hidden");$("app").classList.add("hidden");return}}$("auth").classList.add("hidden");$("app").classList.remove("hidden");await load("dashboard",false)}
+$("loginBtn").onclick=async()=>{try{$("loginMsg").textContent="A entrar…";const{error}=await s.auth.signInWithPassword({email:$("email").value,password:$("password").value});if(error)throw error;await routeAuth()}catch(e){$("loginMsg").textContent=e.message;$("loginMsg").className="msg err"}};
+$("mfaBtn").onclick=async()=>{try{if(!mfaFactor)throw Error("Fator MFA não encontrado");const c=await s.auth.mfa.challenge({factorId:mfaFactor.id});if(c.error)throw c.error;const v=await s.auth.mfa.verify({factorId:mfaFactor.id,challengeId:c.data.id,code:$("mfaCode").value});if(v.error)throw v.error;await routeAuth()}catch(e){$("mfaMsg").textContent=e.message;$("mfaMsg").className="msg err"}};
+$("logoutBtn").onclick=async()=>{await s.auth.signOut();location.reload()};
+function setActive(v){document.querySelectorAll("[data-view]").forEach(b=>b.classList.toggle("active",b.dataset.view===v));document.querySelectorAll("[data-bottom]").forEach(b=>b.classList.toggle("active",b.dataset.bottom===v))}
+async function dashboard(){
+ const [d,g]=await Promise.all([api("dashboard"),api("website-growth").catch(()=>({}))]);
+ const c=d.counts||{},m=d.latest_metrics||{},channels=d.channels||[];
+ const conv=(Number(m.conversion_rate||0)*100).toLocaleString("pt-PT",{minimumFractionDigits:1,maximumFractionDigits:1})+"%";
+ const updated=new Date().toLocaleTimeString("pt-PT",{hour:"2-digit",minute:"2-digit"});
+ return '<div class="dashboardHello"><div><small>COMMAND CENTER</small><h2>BRILHAH em tempo real</h2><p>Vendas, operação, site e canais num único ecrã.</p></div><span class="liveBadge"><i></i> atualizado '+esc(updated)+'</span></div>'+
+ '<div class="grid4">'+metric("Encomendas",c.orders||0,"registadas")+metric("Produtos",c.products||0,"ativos")+metric("Emails novos",c.unread_email||0,"Gmail")+metric("Aprovações",c.pending_approvals||0,"pendentes")+'</div>'+
+ '<div class="section"><div class="sectionHead"><h2>Negócio · 30 dias</h2><span class="status connected">Shopify ligado</span></div><div class="grid4">'+metric("Sessões",m.sessions||0,"Shopify Analytics")+metric("Vendas",money(m.total_sales||0),"receita registada")+metric("Conversão",conv,"checkout concluído")+metric("Ticket médio",money(m.average_order_value||0),"por encomenda")+'</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>BRILHAH.com · 7 dias</h2><span class="status connected">site ligado</span></div><div class="grid4">'+metric("Visitas no site",g.page_views_7d||0,"páginas vistas")+metric("Subscritores",g.subscribers_total||0,(g.subscribers_7d||0)+" novos em 7d")+metric("Cliques para loja",g.shop_clicks_7d||0,"intenção de compra")+metric("WhatsApp",g.whatsapp_clicks_7d||0,"pedidos de apoio")+'</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>Ações rápidas</h2><span class="mut">um toque</span></div><div class="quickActions">'+
+ '<button class="quickAction" data-jump="orders"><b>▣</b><span>Encomendas<small>Ver pedidos e estados</small></span></button>'+
+ '<button class="quickAction" data-jump="pricing"><b>€</b><span>Preço & Margem<small>Controlar rentabilidade</small></span></button>'+
+ '<button class="quickAction" data-jump="content"><b>▶</b><span>Conteúdo<small>Criar e acompanhar</small></span></button>'+
+ '<button class="quickAction" data-jump="marketing"><b>↗</b><span>Marketing<small>Tráfego e conversão</small></span></button>'+
+ '<button class="quickAction" data-jump="billing"><b>▤</b><span>Faturação<small>Pendências fiscais</small></span></button>'+
+ '<button class="quickAction" data-jump="connections"><b>⌁</b><span>Integrações<small>Estado dos canais</small></span></button>'+
+ '</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>Integrações principais</h2></div><div class="list">'+channels.filter(x=>["shopify","email","supabase","vercel","website_growth","whatsapp","meta"].includes(x.channel)).map(x=>'<div class="row"><div class="meta"><b>'+esc(x.channel==="website_growth"?"SITE":x.channel.toUpperCase())+'</b><small>'+esc(x.account_label||"")+'</small></div><span class="status '+(x.status==="connected"?"connected":"pending")+'">'+esc(x.status==="connected"?"ligado":"pendente")+'</span></div>').join("")+'</div></div>'
+}
+async function email(){const d=await api("email");cache.email=d;return'<div class="sectionHead"><h2>Novos emails</h2><button id="allRead" class="btn primary" '+(!(d.messages||[]).length?"disabled":"")+'>Tudo lido ✓</button></div>'+((d.messages||[]).length?'<div class="list">'+d.messages.map((e,i)=>'<div class="row" data-email="'+i+'" style="cursor:pointer"><div class="meta"><b>'+esc(e.subject)+'</b><small>'+esc(e.sender)+' · '+esc(e.snippet||"")+'</small></div><span class="status pending">novo</span></div>').join("")+'</div>':empty("Sem emails novos."))}
+function showEmail(i){const e=cache.email.messages[i];api("email-read",{method:"POST",body:JSON.stringify({action:"one",gmail_id:e.gmail_id})}).catch(()=>{});$("drawer").innerHTML='<button class="btn" id="closeDrawer">← Voltar</button><h2>'+esc(e.subject)+'</h2><p class="mut">'+esc(e.sender)+'</p><p>'+esc(e.snippet||"Sem pré-visualização.")+'</p>'+(e.display_url?'<a class="btn primary" target="_blank" href="'+esc(e.display_url)+'">Abrir no Gmail ↗</a>':'');$("drawer").classList.remove("hidden");$("closeDrawer").onclick=()=>{$("drawer").classList.add("hidden");load("email",false)}}
+async function whatsapp(){const d=await api("whatsapp");return'<div class="grid3">'+metric("Estado",d.connected?"Ligado":"A concluir",d.connected?"Cloud API ativa":"Cloud API pendente")+metric("Conversas",(d.conversations||[]).length,"registadas")+metric("Humano",d.human_interventions||0,"casos encaminhados")+'</div><div class="section card"><b>Escalamento humano preparado</b><p class="mut">Reclamações, pedidos explícitos de humano, problemas de encomenda, pagamento/segurança e falhas automáticas são encaminhados para o email BRILHAH assim que a Cloud API ficar ligada.</p></div>'}
+async function orders(){const d=await api("orders"),r=d.orders||[];return r.length?'<div class="list">'+r.map(o=>'<div class="row"><div class="meta"><b>'+esc(o.order_number)+' · '+money(o.total)+'</b><small>'+esc(o.product_name||"")+' · '+esc(o.country||"")+' · '+esc(o.fulfillment_status||"")+'</small></div><span class="status '+(String(o.payment_status).toUpperCase()==="PAID"?"connected":"pending")+'">'+esc(o.payment_status||"")+'</span></div>').join("")+'</div>':empty("Sem encomendas.")}
+async function products(){const d=await api("products"),r=d.products||[];return'<div class="productGrid">'+r.map(p=>'<article class="product">'+(p.image_url?'<img src="'+esc(p.image_url)+'">':'')+'<div class="p"><b>'+esc(p.name)+'</b><div class="price">'+money(p.sale_price)+'</div><div class="mut">'+esc(p.supplier_name||"Sem fornecedor")+' · '+esc(p.inventory_total??"—")+' stock</div></div></article>').join("")+'</div>'}
+async function pricing(){const d=await api("pricing"),r=d.rows||[];return'<div class="tableWrap"><table class="table"><thead><tr><th>Produto</th><th>Mercado</th><th>Custo total</th><th>Venda</th><th>Margem</th><th>Recomendação</th></tr></thead><tbody>'+r.map(x=>'<tr><td>'+esc(x.product_name)+'</td><td>'+esc(x.country_code)+'</td><td>'+money(x.total_cost)+'</td><td>'+money(x.sale_price)+'</td><td>'+money(x.gross_margin)+'</td><td>'+esc(x.recommendation||"")+'</td></tr>').join("")+'</tbody></table></div>'}
+async function suppliers(){const d=await api("suppliers"),r=d.suppliers||[];return'<div class="grid3">'+r.map(x=>'<div class="card"><div class="sectionHead"><h2>'+esc(x.name)+'</h2><span class="status '+(x.approval_state==="Aprovado"?"connected":"pending")+'">'+esc(x.approval_state)+'</span></div><p class="mut">Tracking: '+esc(x.tracking||"—")+'<br>Embalagem: '+esc(x.neutral_packaging||"—")+'<br>Prazo: '+esc(x.lead_time||"—")+'<br>Pós-venda: '+esc(x.return_policy||"—")+'</p></div>').join("")+'</div>'}
+async function markets(){const d=await api("markets"),r=d.coverage||d.markets||[];return'<div class="grid3">'+r.map(x=>'<div class="card"><div class="sectionHead"><h2>'+esc(x.market_name||x.name)+'</h2><span class="status connected">'+esc(x.status||"Ativo")+'</span></div><p class="mut">Código: '+esc(x.country_code||"—")+'<br>Produtos: '+esc(x.product_rows??"—")+'<br>Logística em falta: '+esc(x.missing_logistics??"—")+'</p></div>').join("")+'</div>'}
+async function returnsView(){const d=await api("returns"),r=d.returns||[];return'<div class="sectionHead"><h2>Ocorrências</h2><button id="newReturn" class="btn primary">+ Registar</button></div>'+(r.length?'<div class="list">'+r.map(x=>'<div class="row"><div class="meta"><b>'+esc(x.order_reference||"Ocorrência")+' · '+esc(x.reason||"")+'</b><small>'+esc(x.proposed_solution||"Sem solução definida")+'</small></div><span class="status pending">'+esc(x.status||"Aberto")+'</span></div>').join("")+'</div>':empty("Sem devoluções ou reclamações."))}
+async function marketing(){
+ const [d,g,c]=await Promise.all([api("marketing"),api("website-growth").catch(()=>({})),api("connections").catch(()=>({connections:[]}))]);
+ const m=d.shopify||{},src=m.referrer_sources||{},conn=c.connections||[];
+ const conv=(Number(m.conversion_rate||0)*100).toLocaleString("pt-PT",{minimumFractionDigits:2,maximumFractionDigits:2})+"%";
+ const social=["meta","facebook","tiktok","whatsapp"].map(ch=>conn.find(x=>x.channel===ch)||{channel:ch,status:"pending",account_label:""}); 
+ return '<div class="section"><div class="sectionHead"><h2>Loja Shopify · 30 dias</h2><span class="status connected">dados reais</span></div><div class="grid4">'+
+ metric("Sessões",m.sessions||0,"Shopify")+metric("Visitantes",m.visitors||0,"únicos")+metric("Vendas",money(m.total_sales||0),(m.orders||0)+" encomenda(s)")+metric("Conversão",conv,"checkout concluído")+
+ '</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>Origem do tráfego</h2></div><div class="grid3">'+
+ metric("Direto",src.direct||0,"sessões")+metric("Pesquisa",src.search||0,"sessões")+metric("Outros",src.unknown||0,"sessões")+
+ '</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>BRILHAH.com · 7 dias</h2><span class="status connected">tracking ativo</span></div><div class="grid4">'+
+ metric("Visitantes",g.unique_sessions_7d||0,"sessões únicas · 7 dias")+metric("Visualizações",g.page_views_7d||0,"páginas vistas · 7 dias")+metric("Cliques p/ loja",g.shop_clicks_7d||0,"intenção de compra")+metric("Subscritores",g.subscribers_total||0,(g.subscribers_7d||0)+" novos em 7d")+
+ '</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>Redes sociais & canais</h2><span class="mut">métricas completas após OAuth</span></div><div class="list">'+
+ social.map(x=>'<div class="row"><div class="meta"><b>'+esc(x.channel.toUpperCase())+'</b><small>'+esc(x.account_label||"ligação por concluir")+'</small></div><span class="status '+(x.status==="connected"?"connected":"pending")+'">'+esc(x.status==="connected"?"ligado":"OAuth pendente")+'</span></div>').join("")+
+ '</div></div>'
+}
+async function revenues(){const d=await api("revenues"),f=d.order_finance||{},r=d.revenues||[];return'<div class="grid4">'+metric("Receita",money(f.gross_revenue||0),"bruta")+metric("Produto",money(f.product_cost||0),"custo")+metric("Envio",money(f.shipping_cost||0),"custo")+metric("Margem",money(f.estimated_margin||0),"estimada")+'</div><div class="section list">'+r.map(x=>'<div class="row"><div class="meta"><b>'+esc(x.source)+' · '+money(x.amount)+'</b><small>'+esc(x.description||"")+'</small></div><span class="status pending">'+esc(x.status||"")+'</span></div>').join("")+'</div>'}
+async function billing(){const d=await api("billing"),r=d.invoices||[];return'<div class="grid2">'+metric("A validar",d.pending_validation||0,"na AT")+metric("Pendente de entrega",d.pending_delivery||0,"ao cliente")+'</div><div class="section"><div class="sectionHead"><h2>Fila atual</h2><a class="btn primary" target="_blank" href="https://irs.portaldasfinancas.gov.pt/recibos/portal/emitir">Portal das Finanças ↗</a></div>'+(r.length?'<div class="list">'+r.map(i=>'<div class="row"><div class="meta"><b>'+esc(i.order_number||"Fatura")+' · '+money(i.gross_total)+'</b><small>'+esc(i.customer_name||"Cliente")+' · '+esc(i.operational_status||"")+'</small></div><div class="inline">'+(i.invoice_status==="prepared"?'<a class="btn primary" target="_blank" href="https://irs.portaldasfinancas.gov.pt/recibos/portal/emitir">Validar na AT ↗</a><button class="btn success" data-invoice="'+esc(i.id)+'" data-act="complete">Já emiti ✓</button>':'')+((i.invoice_status==="issued"||i.invoice_status==="validated")&&i.delivery_status==="pending"?'<button class="btn success" data-invoice="'+esc(i.id)+'" data-act="deliver">Confirmar entrega ✓</button>':'')+(["draft","pending"].includes(i.invoice_status)?'<button class="btn primary" data-invoice="'+esc(i.id)+'" data-act="prepare">Preparar</button>':'')+'</div></div>').join("")+'</div>':empty("Sem pendências."))+'</div>'}
+async function fiscality(){const d=await api("fiscality");return'<div class="grid2">'+metric("Atividade",d.activity_status||"Ativa","desde "+(d.activity_start||"02/09/2026"))+metric("IRS",d.irs_regime||"Regime simplificado","ativo")+metric("IVA",d.vat_regime||"Isenção Artigo 53.º","ativo")+metric("Faturas a validar",d.pending_validation||0,"ação humana")+'</div><div class="section card"><b>'+esc(d.billing_provider||"Portal das Finanças / ATGo")+'</b><p class="mut">A APP prepara e controla. A emissão oficial continua a ser validada pelo titular.</p></div>'}
+async function tasks(){const d=await api("tasks"),r=d.tasks||[];return'<div class="list">'+r.map(t=>'<div class="row"><div class="meta"><b>'+esc(t.title)+'</b><small>'+esc(t.assignee||"")+' · prazo '+esc(t.due_date||"—")+'</small></div><div class="inline"><span class="status '+(String(t.status).toLowerCase().includes("feito")?"connected":"pending")+'">'+esc(t.status)+'</span><button class="btn" data-task="'+esc(t.id)+'" data-taskact="'+(String(t.status).toLowerCase().includes("feito")?"reopen":"done")+'">'+(String(t.status).toLowerCase().includes("feito")?"Reabrir":"Concluir ✓")+'</button></div></div>').join("")+'</div>'}
+async function content(){const d=await api("content"),r=d.jobs||[];cache.content=d;return'<div class="studioHero card"><div><small class="brand">BRILHAH STUDIO</small><h2>Conteúdo a partir do catálogo real</h2><p class="mut">Cria vídeos verticais 9:16 sem watermark de terceiros e guarda-os em privado.</p><div class="inline"><span class="status connected">HeyGen ligado</span><span class="status connected">Brand Kit BRILHAH</span><span class="status pending">API direta na APP pendente</span></div></div><button id="newContent" class="btn primary">+ Criar vídeo</button></div>'+(r.length?'<div class="section list">'+r.map(j=>'<div class="row"><div class="meta"><b>'+esc(j.product_title||"Conteúdo")+'</b><small>'+esc(j.platform)+' · '+esc(j.market)+' · '+esc(j.language)+'</small></div><div class="inline"><span class="status '+(j.status==="ready"?"connected":j.status==="failed"?"failed":"pending")+'">'+esc(j.status)+'</span>'+(j.status==="ready"&&j.asset_url?'<button class="btn" data-video-path="'+esc(j.asset_url)+'">Abrir</button>':'')+'</div></div>').join("")+'</div>':empty("Sem vídeos. Cria o primeiro a partir de um produto real."))}
+
+
+/* BRILHAH Company 360 — 06/09/2026 */
+async function dashboard(){
+ const [d,g,w]=await Promise.all([api("dashboard"),api("website-growth").catch(()=>({})),api("whatsapp").catch(()=>({}))]);
+ const c=d.counts||{},m=d.latest_metrics||{};
+ const conv=(Number(m.conversion_rate||0)*100).toLocaleString("pt-PT",{minimumFractionDigits:1,maximumFractionDigits:1})+"%";
+ const updated=new Date().toLocaleTimeString("pt-PT",{hour:"2-digit",minute:"2-digit"});
+ return '<div class="dashboardHello"><div><small>COMMAND CENTER</small><h2>BRILHAH em tempo real</h2><p>Empresa, site, caixa e operação num único ecrã.</p></div><span class="liveBadge"><i></i> atualizado '+esc(updated)+'</span></div>'+
+ '<div class="grid4">'+metric("Encomendas",c.orders||0,"registadas")+metric("Catálogo","Em reconstrução",(c.products||0)+" registos históricos")+metric("Emails novos",c.unread_email||0,"Gmail")+metric("Aprovações",c.pending_approvals||0,"pendentes")+'</div>'+
+ '<div class="section"><div class="sectionHead"><h2>Negócio · 30 dias</h2><span class="status connected">Shopify ligado</span></div><div class="grid4">'+metric("Sessões",m.sessions||0,"Shopify Analytics")+metric("Vendas",money(m.total_sales||0),"receita registada")+metric("Conversão",conv,"histórico de checkout")+metric("Ticket médio",money(m.average_order_value||0),"por encomenda")+'</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>BRILHAH.com · 7 dias</h2><span class="status connected">site ligado</span></div><div class="grid4">'+metric("Visitas",g.page_views_7d||0,"páginas vistas")+metric("Clube / leads",g.subscribers_total||0,(g.subscribers_7d||0)+" novos em 7d")+metric("WhatsApp",g.whatsapp_clicks_7d||0,"contactos")+metric("Redes",g.social_clicks_7d||0,"cliques sociais")+'</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>Estado atual</h2><span class="mut">catálogo retirado por decisão</span></div><div class="grid3">'+
+ metric("Loja","Em reconstrução","novo catálogo real por aprovar")+metric("WhatsApp",w.connected?"Cloud API ligada":"Business ativo",(w.connected?"automação ligada":"Cloud API/coexistência pendente"))+metric("Site","Captação ativa","Clube, WhatsApp, redes e parcerias")+
+ '</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>Ações rápidas</h2><span class="mut">gestão</span></div><div class="quickActions">'+
+ '<button class="quickAction" data-jump="company"><b>▦</b><span>Empresa 360º<small>Riscos, fiscal e operação</small></span></button>'+
+ '<button class="quickAction" data-jump="revenues"><b>€</b><span>Monetização<small>Receitas e canais</small></span></button>'+
+ '<button class="quickAction" data-jump="tasks"><b>✓</b><span>Tarefas<small>O que falta fechar</small></span></button>'+
+ '</div></div>';
+}
+
+async function products(){
+ const d=await api("products").catch(()=>({products:[]})),r=d.products||[];
+ return '<div class="card"><div class="sectionHead"><h2>Catálogo temporariamente retirado</h2><span class="status pending">reconstrução</span></div>'+
+ '<p class="mut">Os produtos antigos foram retirados da loja pública. A APP mantém '+esc(r.length)+' registo(s) históricos apenas para controlo — não devem ser tratados como catálogo ativo, promovidos ou usados em novos conteúdos.</p>'+
+ '<div class="inline"><span class="status connected">Histórico preservado</span><span class="status pending">Novos SKUs por aprovar</span></div></div>'+
+ '<div class="section grid3">'+
+ metric("Ativos públicos","0","até nova aprovação")+metric("Critério","Landed cost","produto + envio + taxas por mercado")+metric("Regra","Produto real","imagem, variante, stock e fornecedor confirmados")+
+ '</div>';
+}
+
+async function pricing(){
+ const d=await api("pricing").catch(()=>({rows:[]})),r=d.rows||[];
+ return '<div class="card"><div class="sectionHead"><h2>Preço & Margem — modo sourcing</h2><span class="status pending">sem catálogo ativo</span></div>'+
+ '<p class="mut">Existem '+esc(r.length)+' linha(s) históricas de pricing. Não usar estes valores para publicar. Cada novo produto deve voltar a passar por custo total PT/FR/BE/IE/NL, tracking, impostos/importação, prazo e margem antes de aprovação.</p></div>'+
+ '<div class="section grid3">'+metric("PT / FR / BE / IE / NL","Obrigatório","landed cost por país")+metric("Tracking","Obrigatório","antes de publicar")+metric("Margem","Decisão individual","sem preço fixo automático")+'</div>';
+}
+
+async function content(){
+ const d=await api("content").catch(()=>({jobs:[]})),r=d.jobs||[];
+ return '<div class="studioHero card"><div><small class="brand">BRILHAH STUDIO</small><h2>Modo marca ativo</h2>'+
+ '<p class="mut">Enquanto o catálogo é reconstruído, produzir apenas conteúdo institucional, Clube BRILHAH, inspiração e marca. Conteúdo de produto volta a ser desbloqueado quando existirem SKUs reais aprovados.</p>'+
+ '<div class="inline"><span class="status connected">Brand Kit BRILHAH</span><span class="status connected">Sem watermark</span><span class="status pending">Produto bloqueado até aprovação</span></div></div></div>'+
+ '<div class="section">'+(r.length?'<div class="card"><b>Histórico de produção</b><p class="mut">'+esc(r.length)+' trabalho(s) preservado(s). Não reutilizar produto antigo como se estivesse disponível.</p></div>':empty("Sem trabalhos guardados."))+'</div>';
+}
+
+async function marketing(){
+ const [d,g,c]=await Promise.all([api("marketing"),api("website-growth").catch(()=>({})),api("connections").catch(()=>({connections:[]}))]);
+ const m=d.shopify||{},conn=c.connections||[];
+ const social=["meta","facebook","tiktok","whatsapp"].map(ch=>conn.find(x=>x.channel===ch)||{channel:ch,status:"pending",account_label:""});
+ return '<div class="section"><div class="sectionHead"><h2>BRILHAH.com · aquisição</h2><span class="status connected">orgânico primeiro</span></div><div class="grid4">'+
+ metric("Visitas · 7d",g.page_views_7d||0,"site")+metric("Clube / leads",g.subscribers_total||0,(g.subscribers_7d||0)+" novos em 7d")+metric("WhatsApp",g.whatsapp_clicks_7d||0,"intenção/contacto")+metric("Redes",g.social_clicks_7d||0,"cliques sociais")+
+ '</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>Shopify · histórico 30 dias</h2><span class="mut">catálogo público retirado</span></div><div class="grid3">'+
+ metric("Sessões",m.sessions||0,"histórico")+metric("Vendas",money(m.total_sales||0),(m.orders||0)+" encomenda(s)")+metric("Catálogo","0 ativo","nova curadoria em preparação")+
+ '</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>Canais</h2></div><div class="list">'+
+ social.map(x=>'<div class="row"><div class="meta"><b>'+esc(x.channel.toUpperCase())+'</b><small>'+esc(x.account_label||"ligação por concluir")+'</small></div><span class="status '+(x.status==="connected"?"connected":"pending")+'">'+esc(x.status==="connected"?"ligado":"pendente")+'</span></div>').join("")+
+ '</div></div>';
+}
+
+async function revenues(){
+ const [d,g]=await Promise.all([api("revenues").catch(()=>({})),api("website-growth").catch(()=>({}))]);
+ const f=d.order_finance||{},r=d.revenues||[];
+ const actual=r.reduce((a,x)=>a+(Number(x.amount)||0),0);
+ return '<div class="grid4">'+metric("Receita registada",money(actual||f.gross_revenue||0),"apenas valores reais")+metric("Margem estimada",money(f.estimated_margin||0),"histórico")+metric("Clube / leads",g.subscribers_total||0,"ativo")+metric("Catálogo","0 ativo","reconstrução")+'</div>'+
+ '<div class="section"><div class="sectionHead"><h2>Matriz de monetização</h2><span class="mut">não misturar potencial com receita</span></div><div class="list">'+
+ '<div class="row"><div class="meta"><b>Shopify · vendas próprias</b><small>Fonte principal. Reabre quando os novos produtos forem aprovados.</small></div><span class="status connected">infraestrutura ativa</span></div>'+
+ '<div class="row"><div class="meta"><b>Clube BRILHAH & email</b><small>Captação própria para lançamentos, retenção e futuras campanhas. Sem custo de aquisição pago nesta fase.</small></div><span class="status connected">captação ativa</span></div>'+
+ '<div class="row"><div class="meta"><b>Conteúdo editorial & afiliados</b><small>Preparado para recomendações relevantes, sempre com identificação transparente da relação comercial.</small></div><span class="status pending">pronto a ativar</span></div>'+
+ '<div class="row"><div class="meta"><b>Parcerias & conteúdos patrocinados</b><small>Área de colaborações já integrada no site. Receita só é registada quando existir acordo real.</small></div><span class="status pending">pipeline</span></div>'+
+ '<div class="row"><div class="meta"><b>Publicidade display / AdSense</b><small>Infraestrutura prevista. Não ativar antes de haver tráfego consistente e sem comprometer a experiência premium.</small></div><span class="status pending">futuro</span></div>'+
+ '</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>Receitas contabilizadas</h2></div>'+(r.length?'<div class="list">'+r.map(x=>'<div class="row"><div class="meta"><b>'+esc(x.source)+' · '+money(x.amount)+'</b><small>'+esc(x.description||"")+'</small></div><span class="status connected">'+esc(x.status||"registado")+'</span></div>').join("")+'</div>':empty("Sem novas receitas registadas."))+'</div>';
+}
+
+async function fiscality(){
+ const d=await api("fiscality").catch(()=>({});
+ return '<div class="grid2">'+metric("Atividade",d.activity_status||"Ativa","desde "+(d.activity_start||"02/09/2026"))+metric("IRS",d.irs_regime||"Regime simplificado","vendas de mercadorias: controlo anual")+metric("IVA",d.vat_regime||"Isenção Artigo 53.º","monitorizar limite e operações UE/importação")+metric("Faturas a validar",d.pending_validation||0,"ação humana")+'</div>'+
+ '<div class="section list">'+
+ '<div class="row"><div class="meta"><b>Prazo de emissão</b><small>Em regra, até ao 5.º dia útil após os bens serem colocados à disposição; em adiantamento, emitir na data do recebimento.</small></div><span class="status connected">controlo</span></div>'+
+ '<div class="row"><div class="meta"><b>Comunicação à AT</b><small>Elementos das faturas: até ao dia 5 do mês seguinte à emissão.</small></div><span class="status connected">mensal</span></div>'+
+ '<div class="row"><div class="meta"><b>Artigo 53.º</b><small>Monitorizar volume de negócios nacional e condições do regime; não assumir que resolve automaticamente operações transfronteiriças.</small></div><span class="status pending">monitorização</span></div>'+
+ '<div class="row"><div class="meta"><b>UE / importações</b><small>Antes de cada novo SKU: confirmar origem, IOSS/OSS quando aplicável, DDP, IVA na importação e custo aduaneiro. Desde 01/07/2026 existe direito aduaneiro temporário de 3 € por item em certas vendas à distância de bens importados até 150 €.</small></div><span class="status critical">obrigatório no sourcing</span></div>'+
+ '</div><div class="section card"><b>'+esc(d.billing_provider||"Portal das Finanças / ATGo")+'</b><p class="mut">A APP prepara e controla. A emissão oficial continua a ser validada pelo titular.</p></div>';
+}
+
+async function company(){
+ const [f,g,w,t,c]=await Promise.all([
+   api("fiscality").catch(()=>({})),api("website-growth").catch(()=>({})),api("whatsapp").catch(()=>({})),
+   api("tasks").catch(()=>({tasks:[]})),api("connections").catch(()=>({connections:[]}))
+ ]);
+ const tasks=t.tasks||[],open=tasks.filter(x=>!String(x.status||"").toLowerCase().includes("feito"));
+ const con=c.connections||[],connected=con.filter(x=>x.status==="connected").length;
+ return '<div class="dashboardHello"><div><small>EMPRESA 360º</small><h2>BRILHAH · controlo executivo</h2><p>O que está operacional, o que está em reconstrução e o que exige intervenção.</p></div><span class="liveBadge"><i></i> '+esc(open.length)+' tarefa(s) aberta(s)</span></div>'+
+ '<div class="grid4">'+metric("Atividade","Ativa","desde "+(f.activity_start||"02/09/2026"))+metric("Catálogo","0 público","reconstrução controlada")+metric("Clube / leads",g.subscribers_total||0,"base própria")+metric("Integrações",connected+"/"+con.length,"marcadas como ligadas")+'</div>'+
+ '<div class="section"><div class="sectionHead"><h2>1 · Legal, fiscal e contabilidade</h2></div><div class="list">'+
+ '<div class="row"><div class="meta"><b>Atividade + IRS</b><small>Atividade ativa; regime simplificado. Separar receita, custos, taxas, reembolsos e payouts por período.</small></div><span class="status connected">ativo</span></div>'+
+ '<div class="row"><div class="meta"><b>IVA Art. 53.º</b><small>Monitorização obrigatória; rever antes de escalar UE/importações.</small></div><span class="status pending">vigiar</span></div>'+
+ '<div class="row"><div class="meta"><b>Segurança Social</b><small>Confirmar no portal a isenção/obrigação em acumulação com trabalho por conta de outrem e acompanhar o limite aplicável.</small></div><span class="status pending">confirmar</span></div>'+
+ '<div class="row"><div class="meta"><b>Reconciliação financeira</b><small>Shopify payout → banco → fatura → fornecedor → taxas → margem real.</small></div><span class="status pending">rotina mensal</span></div>'+
+ '</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>2 · Produto, sourcing e produção</h2></div><div class="list">'+
+ '<div class="row"><div class="meta"><b>Novo catálogo</b><small>Selecionar apenas produtos reais com fotos/variantes verificadas e custo total por PT/FR/BE/IE/NL.</small></div><span class="status critical">prioridade</span></div>'+
+ '<div class="row"><div class="meta"><b>Fornecedor</b><small>Tracking, embalagem neutra, prazo, stock, defeito/erro, devoluções, IOSS/DDP e landed cost antes de publicar.</small></div><span class="status critical">gate</span></div>'+
+ '<div class="row"><div class="meta"><b>Conteúdo</b><small>Marca e inspiração agora; produto apenas depois de SKU aprovado.</small></div><span class="status connected">regra ativa</span></div>'+
+ '</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>3 · Comercial, marketing e monetização</h2></div><div class="list">'+
+ '<div class="row"><div class="meta"><b>Site BRILHAH</b><small>Bio, Clube, WhatsApp, redes, lista de espera e colaborações ativos.</small></div><span class="status connected">produção</span></div>'+
+ '<div class="row"><div class="meta"><b>Receitas</b><small>Separar sempre venda real de Shopify de afiliados, parcerias, publicidade e receitas futuras.</small></div><span class="status connected">controlo</span></div>'+
+ '<div class="row"><div class="meta"><b>Estratégia</b><small>Orgânico primeiro; investimento pago apenas depois de vendas consistentes.</small></div><span class="status connected">definida</span></div>'+
+ '</div></div>'+
+ '<div class="section"><div class="sectionHead"><h2>4 · Atendimento e tecnologia</h2></div><div class="list">'+
+ '<div class="row"><div class="meta"><b>WhatsApp</b><small>Click-to-chat ativo; Cloud API/coexistência continua a ser o fecho para automação total.</small></div><span class="status '+(w.connected?"connected":"pending")+'">'+(w.connected?"ligado":"pendente")+'</span></div>'+
+ '<div class="row"><div class="meta"><b>Supabase</b><small>Funções administrativas sensíveis deixaram de ser executáveis diretamente por utilizadores autenticados; acesso continua via Edge Function protegida por MFA.</small></div><span class="status connected">reforçado</span></div>'+
+ '<div class="row"><div class="meta"><b>Password comprometida</b><small>Ativar Leaked Password Protection no Supabase Auth.</small></div><span class="status pending">por configurar</span></div>'+
+ '</div></div>'+
+ '<div class="section card"><b>Próximo objetivo operacional</b><p class="mut">Fechar segurança + regime fiscal/importação + sourcing dos novos SKUs. Só depois reabrir catálogo e retestar checkout nos 5 mercados.</p></div>';
+}
+\nasync function copilot(){
+ const [d,o,e,p]=await Promise.all([api("dashboard"),api("orders").catch(()=>({orders:[]})),api("email").catch(()=>({new_count:0,messages:[]})),api("pricing").catch(()=>({rows:[]}))]);
+ cache.copilot={d,o,e,p};
+ const orders=o.orders||[],emails=e.messages||[],pricing=p.rows||[],c=d.counts||{};
+ const paid=orders.filter(x=>String(x.payment_status||x.financial_status||"").toUpperCase().includes("PAID")&&!String(x.fulfillment_status||"").toLowerCase().includes("fulfilled")).length;
+ const thin=pricing.filter(x=>Number(x.gross_margin||0)<5&&Number(x.sale_price||0)>0).length;
+ return '<div class="copilotWelcome"><span class="brand">COPILOTO BRILHAH</span><h2>O que precisa de atenção?</h2><p class="mut">Usa os dados reais da operação para te levar diretamente à decisão certa.</p></div><div class="quickGrid"><button class="quick" data-cmd="orders">▣<b>Encomendas</b><small>'+paid+' pagas por tratar</small></button><button class="quick" data-cmd="email">✉<b>Emails</b><small>'+Number(e.new_count||emails.length)+' novos</small></button><button class="quick" data-cmd="pricing">€<b>Margens</b><small>'+thin+' apertadas</small></button><button class="quick" data-cmd="content">▶<b>Vídeos</b><small>9:16 · catálogo real</small></button></div><div class="copilotBox"><div id="copilotLog" class="copilotLog"><div class="bubble ai">Escreve: “encomendas”, “emails”, “margens”, “faturação” ou “criar vídeo”.</div></div><div class="copilotComposer"><input id="copilotInput" placeholder="Escreve um comando..."><button id="copilotSend" class="btn primary">Enviar</button></div></div>'}
+async function alerts(){
+ const [d,o,e,c,n]=await Promise.all([
+  api("dashboard"),
+  api("orders").catch(()=>({orders:[]})),
+  api("email").catch(()=>({new_count:0,messages:[]})),
+  api("connections").catch(()=>({connections:[]})),
+  api("notes").catch(()=>({notes:[]}))
+ ]);
+ const orders=o.orders||[], emails=e.messages||[], conns=c.connections||[], notes=(n.notes||[]).filter(x=>x.status==="open");
+ const items=[];
+ orders.filter(x=>String(x.payment_status||x.financial_status||"").toUpperCase().includes("PAID")&&!String(x.fulfillment_status||"").toLowerCase().includes("fulfilled"))
+   .forEach(x=>items.push({lvl:"critical",title:"Encomenda paga por tratar",body:(x.order_number||"Pedido")+" · "+(x.product_name||"")+" · "+(x.fulfillment_status||"sem fulfillment"),jump:"orders"}));
+ if(Number(e.new_count||emails.length)>0) items.push({lvl:"pending",title:"Emails novos",body:Number(e.new_count||emails.length)+" mensagem(ns) por rever",jump:"email"});
+ conns.filter(x=>x.status!=="connected").forEach(x=>items.push({lvl:"pending",title:"Integração pendente: "+String(x.channel||"").toUpperCase(),body:x.account_label||"Ligação por concluir",jump:"connections"}));
+ notes.slice(0,5).forEach(x=>items.push({lvl:"pending",title:x.title||"Pendência",body:x.body||"",jump:"launch"}));
+ const ai=conns.find(x=>x.channel==="ai"); if(ai&&ai.status!=="connected") items.push({lvl:"pending",title:"Copiloto generativo",body:"Falta credencial de um fornecedor LLM ou gateway gerido.",jump:"copilot"});
+ return '<div class="sectionHead"><h2>Centro de atenção</h2><span class="status '+(items.some(x=>x.lvl==="critical")?"critical":"connected")+'">'+items.length+' alerta(s)</span></div>'+
+   (items.length?'<div class="list">'+items.map(x=>'<div class="row"><div class="meta"><b>'+esc(x.title)+'</b><small>'+esc(x.body)+'</small></div><button class="btn" data-jump="'+esc(x.jump)+'">Abrir</button></div>').join("")+'</div>':empty("Tudo tranquilo. Sem ações urgentes."))}
+async function customers(){const d=await api("customers"),r=d.customers||[];return r.length?'<div class="list">'+r.map(c=>'<div class="row"><div class="meta"><b>'+esc((c.first_name||"")+" "+(c.last_name||""))+'</b><small>'+esc(c.email||"")+' · '+esc(c.country_code||"")+'</small></div><span class="status">'+esc(c.lifecycle_status||"cliente")+'</span></div>').join("")+'</div>':empty("Sem clientes.")}
+async function approvals(){const d=await api("approvals"),r=d.approvals||[];return r.length?'<div class="list">'+r.map(a=>'<div class="row"><div class="meta"><b>'+esc(a.requested_action||"Pedido de aprovação")+'</b><small>'+esc(a.ai_rationale||"")+'</small></div><div class="inline">'+(a.status==="pending"?'<button class="btn success" data-approval="'+esc(a.id)+'" data-decision="approved">Aprovar</button><button class="btn danger" data-approval="'+esc(a.id)+'" data-decision="rejected">Rejeitar</button>':'<span class="status connected">'+esc(a.status)+'</span>')+'</div></div>').join("")+'</div>':empty("Sem aprovações pendentes.")}
+async function connections(){const d=await api("connections"),r=d.connections||[];return'<div class="list">'+r.map(c=>{const cfg=c.config||{};let note="";if(c.channel==="meta"&&cfg.panel_oauth===false)note=" · ativos/pixel ligados, OAuth do Manager pendente";if(c.channel==="facebook"&&cfg.panel_oauth===false)note=" · página ligada, OAuth do Manager pendente";if(c.channel==="tiktok")note=" · Business Center pronto, integração técnica pendente";if(c.channel==="video"&&cfg.brand_kit_status==="completed")note=" · Brand Kit BRILHAH pronto";if(c.channel==="ai"&&cfg.generative_llm===false)note=" · roteador ativo, LLM generativo pendente";return'<div class="row"><div class="meta"><b>'+esc(c.channel.toUpperCase())+'</b><small>'+esc((c.account_label||"")+note)+'</small></div><span class="status '+(c.status==="connected"?"connected":"pending")+'">'+esc(c.status==="connected"?"ligado":"pendente")+'</span></div>'}).join("")+'</div>'}
+async function launch(){const d=await api("notes"),r=(d.notes||[]).filter(n=>n.status==="open");return r.length?'<div class="list">'+r.map(n=>'<div class="row"><div class="meta"><b>'+esc(n.title)+'</b><small>'+esc(n.body||"")+'</small></div><button class="btn" data-note="'+esc(n.id)+'">Concluir ✓</button></div>').join("")+'</div>':empty("Sem pendências abertas.")}
+const views={dashboard,company,copilot,alerts,email,whatsapp,orders,products,pricing,suppliers,markets,returns:returnsView,marketing,revenues,billing,fiscality,tasks,content,customers,approvals,connections,launch};
+async function load(v,push=true){
+ if(!views[v])v="dashboard";
+ if(push&&v!==current)hist.push(v);
+ current=v;setActive(v);
+ $("title").textContent=titles[v][0];$("sub").textContent=titles[v][1];
+ $("view").innerHTML='<div class="loadingCard"><span class="spinner"></span><b>A carregar '+esc(titles[v][0])+'…</b><small>A sincronizar dados reais.</small></div>';
+ $("sidebar").classList.remove("open");
+ try{
+   const html=await views[v]();
+   $("view").innerHTML=html||empty("Sem dados para apresentar.");
+   bind()
+ }catch(e){
+   $("view").innerHTML='<div class="errorCard"><b>Não foi possível carregar esta área.</b><span>'+esc(e.message||"Erro de ligação")+'</span><button id="retryView" class="btn primary">Tentar novamente</button></div>';
+   bind()
+ }
+}
+
+function aiRoute(q){
+ q=String(q||"").toLowerCase();
+ if(/encomenda|pedido|tracking|fulfill/.test(q))return["orders","Abro Encomendas."];
+ if(/email|fornecedor|resposta/.test(q))return["email","Abro Atendimento."];
+ if(/margem|preço|custo/.test(q))return["pricing","Abro Preço & Margem."];
+ if(/empresa|auditoria|360|negócio|negocio|estado geral/.test(q))return["company","Abro Empresa 360º."];\n if(/monetiza|receita|afiliad|parceria|adsense|patrocin/.test(q))return["revenues","Abro Receitas & Monetização."];\n if(/fatura|iva|fiscal/.test(q))return["billing","Abro Faturação."];
+ if(/video|vídeo|conteúdo|reel/.test(q))return["content","Abro o BRILHAH Studio."];
+ return[null,"Posso levar-te a Empresa 360º, Encomendas, Monetização, Emails, Margens, Faturação ou Conteúdo."];
+}
+async function runCopilot(q){
+ const log=$("copilotLog");if(!q||!log)return;
+ log.insertAdjacentHTML("beforeend",'<div class="bubble user">'+esc(q)+'</div>');
+ const [target,msg]=aiRoute(q);
+ log.insertAdjacentHTML("beforeend",'<div class="bubble ai">'+esc(msg)+(target?' <button class="miniLink" data-jump="'+target+'">Abrir →</button>':'')+'</div>');
+ document.querySelectorAll("[data-jump]").forEach(x=>x.onclick=()=>load(x.dataset.jump));
+ document.querySelectorAll("[data-cmd]").forEach(x=>x.onclick=()=>load(x.dataset.cmd));
+ if($("copilotSend"))$("copilotSend").onclick=()=>runCopilot($("copilotInput").value);
+ if($("copilotInput"))$("copilotInput").onkeydown=e=>{if(e.key==="Enter"){e.preventDefault();const q=e.target.value;e.target.value="";runCopilot(q)}};
+ document.querySelectorAll("[data-video-path]").forEach(x=>x.onclick=async()=>{const d=await api("content-download-url",{method:"POST",body:JSON.stringify({path:x.dataset.videoPath})});if(d.signedUrl)window.open(d.signedUrl,"_blank")});log.scrollTop=log.scrollHeight;
+}
+function marketText(m){return({PT:"O teu momento começa aqui.",FR:"Ton moment commence ici.",BE:"Ton style. Ton moment.",IE:"Your style. Your moment.",NL:"Jouw stijl. Jouw moment."}[m]||"BRILHAH")}
+async function imageFromUrl(src){
+ const t=await token(),r=await fetch(A+"?resource=image-proxy&url="+encodeURIComponent(src),{headers:{authorization:"Bearer "+t}});
+ if(!r.ok)throw Error("Imagem indisponível");const b=await r.blob();return await createImageBitmap(b);
+}
+async function renderVideo(product,market,prompt,status){
+ if(!window.MediaRecorder||!HTMLCanvasElement.prototype.captureStream)throw Error("Este dispositivo não suporta render local de vídeo.");
+ const cv=document.createElement("canvas");cv.width=720;cv.height=1280;const x=cv.getContext("2d"),img=await imageFromUrl(product.image_url);
+ const stream=cv.captureStream(24),type=MediaRecorder.isTypeSupported("video/webm;codecs=vp8")?"video/webm;codecs=vp8":"video/webm",rec=new MediaRecorder(stream,{mimeType:type,videoBitsPerSecond:2800000}),chunks=[];
+ rec.ondataavailable=e=>{if(e.data.size)chunks.push(e.data)};const done=new Promise((res,rej)=>{rec.onstop=()=>res(new Blob(chunks,{type:"video/webm"}));rec.onerror=e=>rej(e.error)});
+ rec.start(500);const start=performance.now(),dur=5000;
+ await new Promise(resolve=>{function f(now){const t=Math.min(1,(now-start)/dur),iw=img.width,ih=img.height,s=Math.max(720/iw,1280/ih)*(1.03+.05*t),dw=iw*s,dh=ih*s;
+ x.fillStyle="#101010";x.fillRect(0,0,720,1280);x.drawImage(img,(720-dw)/2,(1280-dh)/2,dw,dh);
+ const g=x.createLinearGradient(0,0,0,1280);g.addColorStop(.45,"rgba(0,0,0,0)");g.addColorStop(1,"rgba(0,0,0,.82)");x.fillStyle=g;x.fillRect(0,0,720,1280);
+ x.fillStyle="#fff";x.font="800 30px system-ui";x.fillText("B R I L H A H",42,70);x.font="800 50px system-ui";x.fillText(marketText(market),42,970);
+ x.font="500 28px system-ui";x.fillText((prompt||product.name).slice(0,42),42,1022);x.fillStyle="#f5a879";x.font="800 34px system-ui";x.fillText(Number(product.sale_price||19.99).toLocaleString("pt-PT",{style:"currency",currency:"EUR"}),42,1080);
+ x.fillStyle="#fff";x.fillRect(42,1140,260,62);x.fillStyle="#111";x.font="800 23px system-ui";x.fillText("VISITA A LOJA",62,1179);
+ if(status)status.textContent="A renderizar… "+Math.round(t*100)+"%";if(t<1)requestAnimationFrame(f);else resolve()}requestAnimationFrame(f)});
+ rec.stop();return await done;
+}
+async function makeVideo(product,platform,market,prompt){
+ const c=await api("content-create",{method:"POST",body:JSON.stringify({product_gid:product.shopify_product_gid,product_title:product.name,platform,content_type:"video",aspect_ratio:"9:16",width:720,height:1280,market,language:market==="PT"?"pt-PT":market==="FR"||market==="BE"?"fr":market==="NL"?"nl":"en",prompt})});
+ const job=c.job;if(!job?.id)throw Error("Falha a criar trabalho");const st=$("studioStatus");
+ try{const blob=await renderVideo(product,market,prompt,st);if(st)st.textContent="A guardar…";const u=await api("content-upload-url",{method:"POST",body:JSON.stringify({id:job.id,ext:"webm"})});
+ const up=await s.storage.from("brilhah-content").uploadToSignedUrl(u.path,u.token,blob,{contentType:"video/webm",upsert:true});if(up.error)throw up.error;
+ await api("content-complete",{method:"POST",body:JSON.stringify({id:job.id,path:u.path,mime:"video/webm"})});return true}catch(e){await api("content-fail",{method:"POST",body:JSON.stringify({id:job.id,reason:e.message||"erro"})}).catch(()=>{});throw e}
+}
+
+function bind(){
+ document.querySelectorAll("[data-jump]").forEach(x=>x.onclick=()=>load(x.dataset.jump));
+ if($("retryView"))$("retryView").onclick=()=>load(current,false);
+ if($("allRead"))$("allRead").onclick=async()=>{await api("email-read",{method:"POST",body:JSON.stringify({action:"all"})});load("email",false)};
+ document.querySelectorAll("[data-email]").forEach(x=>x.onclick=()=>showEmail(Number(x.dataset.email)));
+ document.querySelectorAll("[data-invoice]").forEach(x=>x.onclick=async()=>{const id=x.dataset.invoice,a=x.dataset.act;x.disabled=true;try{if(a==="complete"){await api("invoice-action",{method:"POST",body:JSON.stringify({id,action:"validate"})});await api("invoice-action",{method:"POST",body:JSON.stringify({id,action:"issue"})})}else await api("invoice-action",{method:"POST",body:JSON.stringify({id,action:a})});load("billing",false)}catch(e){alert(e.message);x.disabled=false}});
+ document.querySelectorAll("[data-task]").forEach(x=>x.onclick=async()=>{await api("task-action",{method:"POST",body:JSON.stringify({id:x.dataset.task,action:x.dataset.taskact})});load("tasks",false)});
+ document.querySelectorAll("[data-approval]").forEach(x=>x.onclick=async()=>{await api("approval-decision",{method:"POST",body:JSON.stringify({id:x.dataset.approval,decision:x.dataset.decision})});load("approvals",false)});
+ document.querySelectorAll("[data-note]").forEach(x=>x.onclick=async()=>{await api("note-done",{method:"POST",body:JSON.stringify({id:x.dataset.note})});load("launch",false)});
+ if($("newReturn"))$("newReturn").onclick=()=>{$("drawer").innerHTML='<button class="btn" id="closeDrawer">← Voltar</button><h2>Registar ocorrência</h2><div class="field"><label>Encomenda</label><input id="rrOrder" placeholder="#1001"></div><div class="field"><label>Motivo</label><input id="rrReason"></div><div class="field"><label>Responsabilidade</label><input id="rrResp" placeholder="Fornecedor / Cliente / Por determinar"></div><div class="field"><label>Solução proposta</label><input id="rrSol"></div><div class="field"><label>Notas</label><textarea id="rrNotes"></textarea></div><button id="saveReturn" class="btn primary full" style="margin-top:12px">Guardar</button>';$("drawer").classList.remove("hidden");$("closeDrawer").onclick=()=>$("drawer").classList.add("hidden");$("saveReturn").onclick=async()=>{await api("return-create",{method:"POST",body:JSON.stringify({order_reference:$("rrOrder").value,reason:$("rrReason").value,responsibility:$("rrResp").value,solution:$("rrSol").value,notes:$("rrNotes").value})});$("drawer").classList.add("hidden");load("returns",false)}};
+ if($("newContent"))$("newContent").onclick=()=>{const ps=cache.content?.products||[];if(!ps.length)return alert("Sem produtos.");$("drawer").innerHTML='<button class="btn" id="closeDrawer">← Voltar</button><h2>BRILHAH Studio</h2><div class="field"><label>Produto</label><select id="ctProduct">'+ps.map((p,i)=>'<option value="'+i+'">'+esc(p.name)+'</option>').join("")+'</select></div><div class="field"><label>Plataforma</label><select id="ctPlatform"><option value="instagram">Instagram</option><option value="tiktok">TikTok</option><option value="facebook">Facebook</option></select></div><div class="field"><label>Mercado</label><select id="ctMarket"><option>PT</option><option>FR</option><option>BE</option><option>IE</option><option>NL</option></select></div><div class="field"><label>Mensagem</label><textarea id="ctPrompt" placeholder="Mensagem opcional"></textarea></div><div id="studioStatus" class="msg"></div><button id="saveContent" class="btn primary full" style="margin-top:12px">Gerar vídeo</button>';$("drawer").classList.remove("hidden");$("closeDrawer").onclick=()=>$("drawer").classList.add("hidden");$("saveContent").onclick=async()=>{const b=$("saveContent");b.disabled=true;try{await makeVideo(ps[Number($("ctProduct").value)||0],$("ctPlatform").value,$("ctMarket").value,$("ctPrompt").value);$("studioStatus").textContent="Vídeo pronto ✓";setTimeout(()=>{$("drawer").classList.add("hidden");load("content",false)},600)}catch(e){$("studioStatus").textContent="Erro: "+e.message;b.disabled=false}}};
+}
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>load(b.dataset.view));
+document.querySelectorAll("[data-bottom]").forEach(b=>b.onclick=()=>load(b.dataset.bottom));
+$("menuBtn").onclick=()=>$("sidebar").classList.add("open");
+$("backBtn").onclick=()=>{if(hist.length>1){hist.pop();load(hist.at(-1),false)}};
+$("refreshBtn").onclick=()=>load(current,false);
+routeAuth();
+</script>
+</body>
+</html>
