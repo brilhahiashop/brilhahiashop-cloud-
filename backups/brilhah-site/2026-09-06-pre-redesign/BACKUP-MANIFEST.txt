@@ -1,0 +1,8 @@
+BRILHAH SITE PRODUCTION BACKUP
+Date: 2026-09-06
+Project: brillhah-site / Vercel project prj_JHXobLqa71C2YcpNToVhb2nLyL1j
+Production deployment preserved: dpl_5wqzKW9rmkqwC8PZzYSr2VhTBBpq
+Production URL at backup time: https://brilhah.com/
+Rollback candidate: yes
+Reason: backup immediately before catalogue-free institutional/Clube BRILHAH redesign.
+Files captured from live production: index.html, style.css, cookies.html, favicon.svg.
